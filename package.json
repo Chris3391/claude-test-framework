@@ -27,11 +27,8 @@
   },
   "dependencies": {
     "@estruyf/github-actions-reporter": "^1.10.0",
-    "@types/mssql": "^9.1.7",
     "dotenv": "^16.5.0",
     "eslint-plugin-playwright": "^2.2.0",
-    "msnodesqlv8": "^4.5.0",
-    "mssql": "^11.0.1",
     "prettier": "^3.5.3",
     "request": "^2.88.2"
   }

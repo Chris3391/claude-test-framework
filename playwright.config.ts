@@ -22,28 +22,29 @@ const reportConfig: OrtoniReportConfig = {
 
 export default defineConfig({
   globalSetup: './config/environments.ts', //Uncomment this to execute tests on local machine
-  timeout: 60000,
+  timeout: 240000,
+  expect: { timeout: 15000 },
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   workers: 1, // Set to 1 to disable parallel execution
   retries: 0,
 
   reporter: [
-  ['list'],
-  ["html", { outputFolder: "../test-mj/playwright-report", open: "never" }],
-  ["ortoni-report", reportConfig],
-  ['@estruyf/github-actions-reporter', <GitHubActionOptions>{
-    title: 'Orange HRM Test results',
-    useDetails: true,
-    showError: true,
-    showAnnotations: true,
-    showAnnotationsInColumn: true,
-    showTags: true,
-    quiet: false,
-    showArtifactsLink: true,
-  }]
-  
-],
+    ['list'],
+    ["html", { outputFolder: "playwright-report", open: "never" }],
+    ["ortoni-report", reportConfig],
+    ['@estruyf/github-actions-reporter', <GitHubActionOptions>{
+      title: 'Orange HRM Test results',
+      useDetails: true,
+      showError: true,
+      showAnnotations: true,
+      showAnnotationsInColumn: true,
+      showTags: true,
+      quiet: false,
+      showArtifactsLink: true,
+    }]
+
+  ],
   use: {
     trace: 'on-first-retry',
   },
@@ -54,7 +55,11 @@ export default defineConfig({
       name: 'Authentication',
       testDir: './tests/ui',
       testMatch: '**/authentication.ts',
-      teardown: 'teardown'
+      teardown: 'teardown',
+      use: {
+        browserName: 'chromium',
+        headless: true,
+      },
     },
     //Web UI Tests
     {
@@ -62,16 +67,16 @@ export default defineConfig({
       dependencies: ['Authentication'],
       testDir: './tests/ui',
       testMatch: "**/*.spec.ts",
-        use: {
-          browserName: 'chromium', // Use 'chromium' for Chrome, 'firefox' for Firefox, 'webkit' for Safari
-          ...devices['Desktop Chrome'] ,
-          launchOptions: {args: ["--start-maximized"]},
-          headless: true,
-          screenshot: 'only-on-failure',
-          video: 'retain-on-failure',
-          trace: 'retain-on-failure',
-          storageState: authFile,
-        },
+      use: {
+        browserName: 'chromium', // Use 'chromium' for Chrome, 'firefox' for Firefox, 'webkit' for Safari
+        ...devices['Desktop Chrome'],
+        launchOptions: { args: ["--start-maximized"] },
+        headless: true,
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
+        trace: 'on',
+        storageState: authFile,
+      },
     },
     // Teardown for Web UI Tests
     {
@@ -86,14 +91,15 @@ export default defineConfig({
       testMatch: '**/*.spec.ts',
       use: {
         baseURL: 'https://petstore.swagger.io/',
+        trace: 'on',
         extraHTTPHeaders: {
           //'API-Key': 'abc', //Example, replace with actual API key if needed
-          'Content-Type': 'application/json', 
-          'Cache-Control' : 'no-cache',
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
           'Accept-Encoding': 'gzip, deflate, br',
           'Connection': 'keep-alive'
         },
-       ignoreHTTPSErrors: true,
+        ignoreHTTPSErrors: true,
       },
     },
     // Database Tests

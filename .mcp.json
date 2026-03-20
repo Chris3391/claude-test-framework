@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "url": "http://localhost:8931/mcp",
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--port",
+        "8931"
+      ],
+      "env": {}
+    }
+  }
+}

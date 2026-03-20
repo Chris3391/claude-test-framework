@@ -1,0 +1,10 @@
+{
+  "leaveListPath": "/web/index.php/leave/viewLeaveList",
+  "leaveModulePath": "/web/index.php/leave/viewLeaveModule",
+  "timePath": "/web/index.php/time/viewTimeModule",
+  "recruitmentPath": "/web/index.php/recruitment/viewRecruitmentModule",
+  "addCandidatePath": "/web/index.php/recruitment/addCandidate",
+  "addVacancyPath": "/web/index.php/recruitment/addJobVacancy",
+  "viewCandidatesPath": "/web/index.php/recruitment/viewCandidates",
+  "viewVacanciesPath": "/web/index.php/recruitment/viewJobVacancy"
+}
