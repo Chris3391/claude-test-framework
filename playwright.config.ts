@@ -2,7 +2,7 @@ import { GitHubActionOptions } from '@estruyf/github-actions-reporter';
 import { defineConfig, devices } from '@playwright/test';
 import { OrtoniReportConfig } from "ortoni-report";
 
-export const authFile = '../test-mj/session-storage/.auth/user.json'
+export const authFile = '.auth/user.json'
 
 
 const reportConfig: OrtoniReportConfig = {
